@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { FormSubmitEvent } from '@nuxt/ui'
 import { useRouter, useSeoMeta } from 'nuxt/app'
 import InputPhoneNumber from '~/components/InputPhoneNumber.vue'
 import { ref } from 'vue'

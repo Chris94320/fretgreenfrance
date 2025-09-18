@@ -7,7 +7,7 @@ import {
   getExampleNumber,
   isSupportedCountry,
   parsePhoneNumberFromString,
-} from 'libphonenumber-js';
+} from 'libphonenumber-js'
 
 function isCountryAvailable(locale: string) {
   try {
