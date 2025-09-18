@@ -23,17 +23,12 @@ const authStore = useAuthStore()
 const phoneNumber = ref<{ e164?: string }>({ e164: undefined })
 const password = ref<number[]>([])
 
-async function onSubmit(payload: FormSubmitEvent<{
-  phoneNumber: string
-  password: string
-}>) {
-  console.log('Submitted', payload)
+async function onSubmit() {
   const body: LAuthModels.AuthPayloadPost = {
     phoneNumber: phoneNumber.value.e164,
     password: password.value.join('')
   }
   const user = await $fetch<LAuthModels.UserRecord>('http://localhost:3000' + LAuthRoutes.api.authentificate, { method: 'POST', body })
-  console.log(user)
   if (user.id) {
     authStore.setUser(user)
     router.push({ name: LDashboardRoutes.pagename.dashboard })

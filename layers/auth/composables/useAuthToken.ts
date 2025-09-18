@@ -21,6 +21,6 @@ export default function useAuthToken() {
   return {
     buildToken,
     encodeTokens,
-    decodeToken,
+    decodeToken
   }
 }

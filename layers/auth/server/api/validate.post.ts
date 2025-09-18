@@ -17,14 +17,9 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400, statusMessage: 'phone number are required' })
     }
 
-    const tokens = authToken.encodeTokens(phoneNumber)
-
-    if (authToken.decodeToken(refreshToken) !== authToken.buildToken(phoneNumber, 'refresh')) {
+    if (authToken.decodeToken(accessToken) !== authToken.buildToken(phoneNumber, 'access')) {
       throw createError({ statusCode: 401, statusMessage: 'token unvalid' })
     }
-
-    setCookie(event, LAuthModels.AuthCookie.access, tokens.access, { httpOnly: true, sameSite: true })
-    setCookie(event, LAuthModels.AuthCookie.refresh, tokens.refresh, { httpOnly: true, sameSite: true })
 
     return { ok: true }
   } catch (error: unknown) {

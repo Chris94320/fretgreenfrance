@@ -1,6 +1,5 @@
 <template>
   <UFormField
-    :error="modelValue && !results.isValid"
     label="Phone number"
     name="phone"
   >
@@ -38,7 +37,7 @@
         class="w-full"
         :trailing-icon="
           modelValue && !results.isValid
-            ? 'i-heroicons-exclamation-triangle-20-solid'
+            ? ''
             : 'i-heroicons-check-20-solid'
         "
         :model-value="phoneNumber"
@@ -67,7 +66,7 @@ import { usePhonenumber } from '~/composables/usePhoneNumber';
 
 defineProps<{
   modelValue: { e164?: string }
-  size?: 'xl' | 'lg' | 'md'  | 'sm' | 'xs'
+  size?: 'xl' | 'lg' | 'md' | 'sm' | 'xs'
 }>();
 const emit = defineEmits(['update:modelValue']);
 const {

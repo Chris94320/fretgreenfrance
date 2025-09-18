@@ -5,5 +5,6 @@ export enum pagename {
 export enum api {
   authentificate = '/api/authentificate',
   refresh = '/api/refresh',
-  disconnect = '/api/disconnect'
+  disconnect = '/api/disconnect',
+  validate = '/api/validate'
 }

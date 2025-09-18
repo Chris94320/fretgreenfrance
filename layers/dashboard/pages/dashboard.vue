@@ -23,12 +23,16 @@ const authStore = useAuthStore()
       {{ authStore.user }}
     </pre>
     <UButton
-      @click="authClient.refresh"
       label="Refresh token"
+      @click="authClient.refresh"
     />
     <UButton
-      @click="authClient.disconnect"
       label="Disconnect"
+      @click="authClient.disconnect"
+    />
+    <UButton
+      label="validate"
+      @click="authClient.validate"
     />
   </div>
 </template>

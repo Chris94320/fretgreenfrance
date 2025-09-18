@@ -16,6 +16,14 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     setUser(user: UserRecord) {
       this.user = { ...user }
+    },
+    resetUser() {
+      this.user = {
+        id: undefined,
+        username: undefined,
+        phoneNumber: undefined,
+        password: undefined
+      } as UserRecord
     }
   }
 })

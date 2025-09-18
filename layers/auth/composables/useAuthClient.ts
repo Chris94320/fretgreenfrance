@@ -4,7 +4,7 @@ import { useAuthStore } from '../stores/useAuthStore'
 
 export default function useAuthClient() {
   const refreshCookie = useCookie(LAuthModels.AuthCookie.refresh)
-  const userAuth = useAuthStore()
+  const authStore = useAuthStore()
 
   const isAuthentificate = computed<boolean>(() => {
     return !!refreshCookie.value
@@ -12,7 +12,7 @@ export default function useAuthClient() {
 
   async function refresh() {
     const body: LAuthModels.RefreshPayloadPost = {
-      phoneNumber: userAuth.user.phoneNumber
+      phoneNumber: authStore.user.phoneNumber
     }
 
     await $fetch('http://localhost:3000' + LAuthRoutes.api.refresh, { method: 'POST', credentials: 'include', body })
@@ -20,11 +20,21 @@ export default function useAuthClient() {
 
   async function disconnect() {
     await $fetch('http://localhost:3000' + LAuthRoutes.api.disconnect, { method: 'POST', credentials: 'include' })
+    authStore.resetUser()
+  }
+
+  async function validate() {
+    const body: LAuthModels.RefreshPayloadPost = {
+      phoneNumber: authStore.user.phoneNumber
+    }
+
+    await $fetch('http://localhost:3000' + LAuthRoutes.api.validate, { method: 'POST', credentials: 'include', body })
   }
 
   return {
     refresh,
     disconnect,
+    validate,
     isAuthentificate
   }
 }
