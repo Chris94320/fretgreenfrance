@@ -38,7 +38,7 @@ const items = computed(() => [
         icon="i-lucide-log-in"
         color="neutral"
         variant="ghost"
-        to="/login"
+        to="/authentificate"
         class="lg:hidden"
       />
 
@@ -46,7 +46,7 @@ const items = computed(() => [
         label="Se connecter"
         color="neutral"
         variant="outline"
-        to="/login"
+        to="/authentificate"
         class="hidden lg:inline-flex"
       />
 
@@ -72,7 +72,7 @@ const items = computed(() => [
         label="Sign in"
         color="neutral"
         variant="subtle"
-        to="/login"
+        to="/authentificate"
         block
         class="mb-3"
       />

@@ -2,7 +2,8 @@
 const colorMode = useColorMode()
 
 const color = computed(() => colorMode.value === 'dark' ? '#020618' : 'white')
-colorMode.preference = 'dark'
+
+onMounted(() => colorMode.preference = 'dark' )
 
 useHead({
   meta: [
@@ -18,19 +19,11 @@ useHead({
   }
 })
 
-
 useSeoMeta({
   titleTemplate: '%s - Fret Green France',
   ogImage: 'https://ui4.nuxt.com/assets/templates/nuxt/saas-light.png',
   twitterImage: 'https://ui4.nuxt.com/assets/templates/nuxt/saas-light.png',
   twitterCard: 'summary_large_image'
-})
-
-const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('docs'), {
-  transform: data => data.find(item => item.path === '/docs')?.children || []
-})
-const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs'), {
-  server: false
 })
 
 const links = [{
@@ -51,7 +44,6 @@ const links = [{
   to: '/actualites'
 }]
 
-provide('navigation', navigation)
 </script>
 
 <template>
@@ -64,9 +56,7 @@ provide('navigation', navigation)
 
     <ClientOnly>
       <LazyUContentSearch
-        :files="files"
         shortcut="meta_k"
-        :navigation="navigation"
         :links="links"
         :fuse="{ resultLimit: 42 }"
       />
