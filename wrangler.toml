@@ -5,9 +5,9 @@ compatibility_flags = [ "nodejs_compat" ]
 compatibility_date = "2022-07-12"
 
 [[d1_databases]]
-binding = "fretgreen_db"
-database_name = "fretgreen-db"
-database_id = "fed7d667-640a-49f3-ac6f-da16e99f7cb4"
+binding = "fretgreen-app"
+database_name = "fretgreen-app"
+database_id = "5773b453-5c38-4440-9c8b-7d81c7705bce"
 migrations_dir = "./server/database/migrations"
 
 [vars]
