@@ -10,7 +10,7 @@ const authentificate = defineNuxtRouteMiddleware(async () => {
     console.info('[middleware][authentificate] user allowed !')
   } else {
     console.info('[middleware][authentificate] user denied !')
-    return await navigateTo({ name: LAuthRoutes.pagename.authentificate }, { redirectCode: 401 })
+    return await navigateTo({ name: LAuthRoutes.pagename.authentificate })
   }
 })
 

@@ -1,5 +1,4 @@
 import type { H3Error } from 'h3'
-import jwt from 'jsonwebtoken'
 import users from '../../data/user.json'
 import { LAuthModels } from '../../index'
 import useAuthToken from '../../composables/useAuthToken'
@@ -14,6 +13,11 @@ export default defineEventHandler(async (event) => {
     if (!phoneNumber || !password) {
       throw createError({ statusCode: 400, statusMessage: 'phone number and password are required' })
     }
+
+    const db = hubDatabase()
+    const userDB = await db.prepare('SELECT * FROM users WHERE phone = ?').bind(phoneNumber).run()
+
+    console.log('userDB', userDB.results)
 
     const matched = users.find(u => u.phoneNumber === phoneNumber && u.password === password)
 

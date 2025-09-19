@@ -5,6 +5,7 @@ import { useAuthStore } from '../stores/useAuthStore'
 export default function useAuthClient() {
   const refreshCookie = useCookie(LAuthModels.AuthCookie.refresh)
   const authStore = useAuthStore()
+  const runtimeConfig = useRuntimeConfig()
 
   const isAuthentificate = computed<boolean>(() => {
     return !!refreshCookie.value && !!authStore.user.id
@@ -15,11 +16,11 @@ export default function useAuthClient() {
       phoneNumber: authStore.user.phoneNumber
     }
 
-    await $fetch('http://localhost:3000' + LAuthRoutes.api.refresh, { method: 'POST', credentials: 'include', body })
+    await $fetch(runtimeConfig.public.baseUrl + LAuthRoutes.api.refresh, { method: 'POST', credentials: 'include', body })
   }
 
   async function disconnect() {
-    await $fetch('http://localhost:3000' + LAuthRoutes.api.disconnect, { method: 'POST', credentials: 'include' })
+    await $fetch(runtimeConfig.public.baseUrl + LAuthRoutes.api.disconnect, { method: 'POST', credentials: 'include' })
     authStore.resetUser()
     navigateTo({ name: LAuthRoutes.pagename.authentificate })
   }
@@ -29,7 +30,7 @@ export default function useAuthClient() {
       phoneNumber: authStore.user.phoneNumber
     }
 
-    await $fetch('http://localhost:3000' + LAuthRoutes.api.validate, { method: 'POST', credentials: 'include', body })
+    await $fetch(runtimeConfig.public.baseUrl + LAuthRoutes.api.validate, { method: 'POST', credentials: 'include', body })
   }
 
   return {

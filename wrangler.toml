@@ -1,6 +1,14 @@
 # Top-level configuration
 name = "fretgreen"
+pages_build_output_dir = "./dist"
+compatibility_flags = [ "nodejs_compat" ]
 compatibility_date = "2022-07-12"
+
+[[d1_databases]]
+binding = "fretgreen_db"
+database_name = "fretgreen-db"
+database_id = "fed7d667-640a-49f3-ac6f-da16e99f7cb4"
+migrations_dir = "./server/database/migrations"
 
 [vars]
 NUXT_BASE_URL = "http://localhost:3000"

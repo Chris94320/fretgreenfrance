@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { navigateTo, useRouter, useSeoMeta } from 'nuxt/app'
+import { navigateTo, useRuntimeConfig, useSeoMeta } from 'nuxt/app'
 import InputPhoneNumber from '~/components/InputPhoneNumber.vue'
 import { ref } from 'vue'
 import { type LAuthModels, LAuthRoutes } from '../'
@@ -16,7 +16,7 @@ useSeoMeta({
   description: 'Login to your account to continue'
 })
 
-const router = useRouter()
+const runtimeConfig = useRuntimeConfig()
 const authStore = useAuthStore()
 
 const phoneNumber = ref<{ e164?: string }>({ e164: undefined })
@@ -27,7 +27,7 @@ async function onSubmit() {
     phoneNumber: phoneNumber.value.e164,
     password: password.value.join('')
   }
-  const user = await $fetch<LAuthModels.UserRecord>('http://localhost:3000' + LAuthRoutes.api.authentificate, { method: 'POST', body })
+  const user = await $fetch<LAuthModels.UserRecord>(runtimeConfig.public.baseUrl + LAuthRoutes.api.authentificate, { method: 'POST', body })
   if (user.id) {
     authStore.setUser(user)
     navigateTo({ name: LDashboardRoutes.pagename.dashboard })
@@ -44,7 +44,7 @@ async function onSubmit() {
       </h1>
     </template>
     <template #default>
-      <div class="">
+      <div>
         <form
           class="flex flex-col justify-center gap-4 py-6"
           @submit.prevent="onSubmit"
