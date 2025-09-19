@@ -8,5 +8,6 @@
 <style scoped>
 img {
   height: 4rem;
+  display: inline-block;
 }
 </style>

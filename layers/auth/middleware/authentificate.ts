@@ -1,13 +1,12 @@
 import { defineNuxtRouteMiddleware, navigateTo } from 'nuxt/app'
 import useAuthClient from '../composables/useAuthClient'
 import { LAuthRoutes } from '..'
-import { useAuthStore } from '../stores/useAuthStore'
 
 const authentificate = defineNuxtRouteMiddleware(async () => {
   console.info('[middleware][authentificate] start')
-  const authClient = useAuthClient()
-  const authStore = useAuthStore()
-  if (authClient.isAuthentificate.value && authStore.user.id) {
+  const { isAuthentificate } = useAuthClient()
+
+  if (isAuthentificate.value) {
     console.info('[middleware][authentificate] user allowed !')
   } else {
     console.info('[middleware][authentificate] user denied !')

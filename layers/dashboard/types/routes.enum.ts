@@ -1,3 +1,5 @@
 export enum pagename {
-  dashboard = 'dashboard'
+  dashboard = 'dashboard',
+  missions = 'missions',
+  offers = 'offers'
 }

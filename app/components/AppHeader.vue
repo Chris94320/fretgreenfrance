@@ -1,8 +1,14 @@
 <script setup lang="ts">
+import { useAuthClient } from '#imports'
+import { LAuthRoutes } from '~~/layers/auth';
+import { LDashboardRoutes } from '~~/layers/dashboard';
+
+const { isAuthentificate } = useAuthClient()
+
 const items = computed(() => [
   {
     label: 'Devis',
-    to: '/',
+    to: '/'
   }, {
     label: 'Services',
     to: '/services'
@@ -12,11 +18,11 @@ const items = computed(() => [
   }, {
     label: 'Actualités',
     to: '/actualites'
-  }, 
-  // {
-  //   label: 'Histoire',
-  //   to: '/histoire'
-  // }
+  },
+  {
+    label: 'Histoire',
+    to: '/histoire'
+  }
 ])
 </script>
 
@@ -38,24 +44,16 @@ const items = computed(() => [
         icon="i-lucide-log-in"
         color="neutral"
         variant="ghost"
-        to="/authentificate"
+        :to="{ name: isAuthentificate ? LDashboardRoutes.pagename.dashboard : LAuthRoutes.pagename.authentificate }"
         class="lg:hidden"
       />
 
       <UButton
-        label="Se connecter"
+        label="Espace pro"
         color="neutral"
         variant="outline"
-        to="/authentificate"
+        :to="{ name: isAuthentificate ? LDashboardRoutes.pagename.dashboard : LAuthRoutes.pagename.authentificate }"
         class="hidden lg:inline-flex"
-      />
-
-      <UButton
-        label="Rejoindre"
-        color="neutral"
-        trailing-icon="i-lucide-arrow-right"
-        class="hidden lg:inline-flex"
-        to="/contact"
       />
     </template>
 
@@ -69,18 +67,10 @@ const items = computed(() => [
       <USeparator class="my-6" />
 
       <UButton
-        label="Sign in"
+        label="Espace pro"
         color="neutral"
-        variant="subtle"
-        to="/authentificate"
-        block
-        class="mb-3"
-      />
-      <UButton
-        label="Sign up"
-        color="neutral"
-        to="/contact"
-        block
+        variant="outline"
+        :to="{ name: isAuthentificate ? LDashboardRoutes.pagename.dashboard : LAuthRoutes.pagename.authentificate }"
       />
     </template>
   </UHeader>

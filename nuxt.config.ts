@@ -16,14 +16,19 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@vueuse/nuxt',
     'nuxt-og-image',
-    '@nuxt/test-utils'
+    '@nuxt/test-utils',
+    '@nuxthub/core'
   ],
 
+  hub: {
+    database: true,
+    blob: true,
+  },
+
   runtimeConfig: {
+    secretKey: process.env.SECRET_KEY || 'secretpasskey',
     public: {
-      auth0Domain: process.env.NUXT_PUBLIC_AUTH0_DOMAIN || 'dev-mvqis1xsjh48m8nv.eu.auth0.com',
-      auth0ClientId: process.env.NUXT_PUBLIC_AUTH0_CLIENT_ID || 'miDfSIByCdcd5XtMedah8IFrMCrwY6OO',
-      authRedirectUri: process.env.NUXT_PUBLIC_AUTH_REDIRECT_URI || 'http://localhost:3000/dashboard'
+      baseUrl: process.env.NUXT_BASE_URL
     }
   },
 
@@ -45,6 +50,7 @@ export default defineNuxtConfig({
 
   nitro: {
     prerender: {
+      autoSubfolderIndex: false,
       routes: [
         '/'
       ],

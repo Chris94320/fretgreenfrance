@@ -11,17 +11,17 @@ import {
 
 function isCountryAvailable(locale: string) {
   try {
-    const response = isSupportedCountry(locale);
+    const response = isSupportedCountry(locale)
 
     if (!response) {
       console.error(
         `(PhoneNumberInput) The code country "${locale}" is not available`
-      );
+      )
 
-      return false;
+      return false
     }
 
-    return response;
+    return response
   } catch (error) {
     console.error(`(PhoneNumberInput) ${error}`);
     return false;

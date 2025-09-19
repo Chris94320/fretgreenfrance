@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRouter, useSeoMeta } from 'nuxt/app'
+import { navigateTo, useRouter, useSeoMeta } from 'nuxt/app'
 import InputPhoneNumber from '~/components/InputPhoneNumber.vue'
 import { ref } from 'vue'
 import { type LAuthModels, LAuthRoutes } from '../'
@@ -30,44 +30,53 @@ async function onSubmit() {
   const user = await $fetch<LAuthModels.UserRecord>('http://localhost:3000' + LAuthRoutes.api.authentificate, { method: 'POST', body })
   if (user.id) {
     authStore.setUser(user)
-    router.push({ name: LDashboardRoutes.pagename.dashboard })
+    navigateTo({ name: LDashboardRoutes.pagename.dashboard })
   }
 }
 </script>
 
 <template>
   <UCard icon="i-lucide-lock">
-    <div class="grid gap-8">
-      <h1 class="text-2xl text-center">
+    <template #header>
+      <h1 class="text-xl text-center text-dimmed">
         <UIcon name="lucide-lock" />
         Authenfication
       </h1>
-      <form
-        class="flex flex-col justify-center gap-4"
-        @submit.prevent="onSubmit"
-      >
-        <InputPhoneNumber
-          v-model="phoneNumber"
-          name="phoneNumber"
-          size="xl"
-        />
-        <UPinInput
-          v-model="password"
-          name="password"
-          type="number"
-          length="6"
-          size="xl"
-          mask
-          class="justify-center"
-        />
-        <UButton
-          type="submit"
-          block
+    </template>
+    <template #default>
+      <div class="">
+        <form
+          class="flex flex-col justify-center gap-4 py-6"
+          @submit.prevent="onSubmit"
         >
-          Se connecter
-        </UButton>
-      </form>
-      <hr class="text-dimmed">
+          <InputPhoneNumber
+            v-model="phoneNumber"
+            name="phoneNumber"
+            size="xl"
+          />
+          <UFormField label="Code">
+            <UPinInput
+              v-model="password"
+              name="password"
+              type="number"
+              length="6"
+              size="xl"
+              mask
+              class="flex justify-between"
+            />
+          </UFormField>
+          <UButton
+            type="submit"
+            variant="outline"
+            size="xl"
+            block
+          >
+            Se connecter
+          </UButton>
+        </form>
+      </div>
+    </template>
+    <template #footer>
       <div class="grid gap-2 text-center text-xs font-bold">
         <p>
           Vous souhaitez créer un compte ?
@@ -77,11 +86,12 @@ async function onSubmit() {
           color="primary"
           variant="link"
           size="sm"
+          class="font-bold"
           block
         >
           Rejoingnez le groupement
         </UButton>
       </div>
-    </div>
+    </template>
   </UCard>
 </template>

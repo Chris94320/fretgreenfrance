@@ -1,19 +1,16 @@
 <script setup lang="ts">
 import { LDashboardRoutes } from '..'
 import authentificate from '@layers/auth/middleware/authentificate'
-import { useAuthStore } from '../../auth/stores/useAuthStore'
-import type { TabsItem } from '@nuxt/ui'
+import { TabsItem } from '@nuxt/ui'
 
 definePageMeta({
   layout: 'dashboard',
   ssr: false,
-  name: LDashboardRoutes.pagename.dashboard,
+  name: LDashboardRoutes.pagename.offers,
   middleware: [
     authentificate
   ]
 })
-
-const authStore = useAuthStore()
 
 const items: TabsItem[] = [
   {
@@ -29,7 +26,7 @@ const items: TabsItem[] = [
 
 <template>
   <div>
-    <UDashboardNavbar title="Dashboard">
+    <UDashboardNavbar title="Offres">
       <template #trailing>
         <UBadge label="4" variant="subtle" />
       </template>
@@ -39,10 +36,7 @@ const items: TabsItem[] = [
       </template>
     </UDashboardNavbar>
     <UContainer class="grid gap-4">
-      <p>Vous êtes connecté</p>
-      <pre>
-        {{ authStore.user }}
-      </pre>
+      <p>liste des offres</p>
     </UContainer>
   </div>
 </template>

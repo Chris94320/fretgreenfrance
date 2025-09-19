@@ -7,7 +7,7 @@ export default function useAuthClient() {
   const authStore = useAuthStore()
 
   const isAuthentificate = computed<boolean>(() => {
-    return !!refreshCookie.value
+    return !!refreshCookie.value && !!authStore.user.id
   })
 
   async function refresh() {
@@ -21,6 +21,7 @@ export default function useAuthClient() {
   async function disconnect() {
     await $fetch('http://localhost:3000' + LAuthRoutes.api.disconnect, { method: 'POST', credentials: 'include' })
     authStore.resetUser()
+    navigateTo({ name: LAuthRoutes.pagename.authentificate })
   }
 
   async function validate() {

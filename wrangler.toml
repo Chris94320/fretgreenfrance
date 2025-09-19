@@ -1,0 +1,9 @@
+# Top-level configuration
+name = "fretgreen"
+compatibility_date = "2022-07-12"
+
+[vars]
+NUXT_BASE_URL = "http://localhost:3000"
+
+[env.production.vars]
+NUXT_BASE_URL = "https://fretgreen.bureaudefret.com"
