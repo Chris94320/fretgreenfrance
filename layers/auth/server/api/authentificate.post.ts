@@ -8,24 +8,24 @@ export default defineEventHandler(async (event) => {
     const authToken = useAuthToken()
 
     const body = (await readBody<LAuthModels.AuthPayloadPost>(event)) || {}
-    const { phoneNumber, password } = body
+    const { phone, password } = body
 
-    if (!phoneNumber || !password) {
+    if (!phone || !password) {
       throw createError({ statusCode: 400, statusMessage: 'phone number and password are required' })
     }
 
     const db = hubDatabase()
-    const userDB = await db.prepare('SELECT * FROM users WHERE phone = ?').bind(phoneNumber).run()
+    const userDB = await db.prepare('SELECT * FROM users WHERE phone = ?').bind(phone).run()
 
     console.log('userDB', userDB.results)
 
-    const matched = users.find(u => u.phoneNumber === phoneNumber && u.password === password)
+    const matched = users.find(u => u.phone === phone && u.password === password)
 
     if (!matched) {
       throw createError({ statusCode: 401, statusMessage: 'Invalid credentials' })
     }
 
-    const token = authToken.encodeTokens(phoneNumber)
+    const token = authToken.encodeTokens(phone)
 
     setCookie(event, LAuthModels.AuthCookie.access, token.access, { httpOnly: true, sameSite: true })
     setCookie(event, LAuthModels.AuthCookie.refresh, token.refresh, { httpOnly: false, sameSite: true })

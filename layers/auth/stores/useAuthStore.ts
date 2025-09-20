@@ -9,7 +9,7 @@ export const useAuthStore = defineStore('auth', {
     user: {
       id: undefined,
       username: undefined,
-      phoneNumber: undefined,
+      phone: undefined,
       password: undefined
     } as UserRecord
   }),
@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', {
       this.user = {
         id: undefined,
         username: undefined,
-        phoneNumber: undefined,
+        phone: undefined,
         password: undefined
       } as UserRecord
     }

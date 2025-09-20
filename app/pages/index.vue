@@ -21,8 +21,8 @@ useSeoMeta({
   
 <template>
   <div v-if="page">
-    <div class="p-8">
-      <div class="w-full h-[calc(100vh-var(--ui-header-height))] px-16 max-w-(--ui-container) gap-4 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
+    <div class="px-8">
+      <div class="w-full h-[calc(100vh-var(--ui-header-height))] max-w-(--ui-container) gap-4 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
         <h1><img :src="logo" :alt="title" class="h-30 md:h-40"></h1>
         <h2 class="text-xl md:text-2xl sm:text-4xl font-bold">{{ subtitle }}</h2>
         <p class="text-l md:text-xl mb-4">{{ description }}</p>

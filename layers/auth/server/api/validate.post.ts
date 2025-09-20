@@ -11,13 +11,13 @@ export default defineEventHandler(async (event) => {
     if (!refreshToken || !accessToken) throw createError({ statusCode: 401, statusMessage: 'No token' })
 
     const body = (await readBody<LAuthModels.RefreshPayloadPost>(event)) || {}
-    const { phoneNumber } = body
+    const { phone } = body
 
-    if (!phoneNumber) {
+    if (!phone) {
       throw createError({ statusCode: 400, statusMessage: 'phone number are required' })
     }
 
-    if (authToken.decodeToken(accessToken) !== authToken.buildToken(phoneNumber, 'access')) {
+    if (authToken.decodeToken(accessToken) !== authToken.buildToken(phone, 'access')) {
       throw createError({ statusCode: 401, statusMessage: 'token unvalid' })
     }
 

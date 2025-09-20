@@ -11,11 +11,18 @@ export default function useAuthClient() {
     return !!refreshCookie.value && !!authStore.user.id
   })
 
+  async function register(body: LAuthModels.RefreshPayloadPost) {
+    await $fetch<LAuthModels.UserRecord>(runtimeConfig.public.baseUrl + LAuthRoutes.api.register, { method: 'POST', body })
+  }
+
+  async function authentificate(body: LAuthModels.AuthPayloadPost) {
+    return await $fetch<LAuthModels.UserRecord>(runtimeConfig.public.baseUrl + LAuthRoutes.api.authentificate, { method: 'POST', body })
+  }
+
   async function refresh() {
     const body: LAuthModels.RefreshPayloadPost = {
-      phoneNumber: authStore.user.phoneNumber
+      phone: authStore.user.phone
     }
-
     await $fetch(runtimeConfig.public.baseUrl + LAuthRoutes.api.refresh, { method: 'POST', credentials: 'include', body })
   }
 
@@ -27,16 +34,17 @@ export default function useAuthClient() {
 
   async function validate() {
     const body: LAuthModels.RefreshPayloadPost = {
-      phoneNumber: authStore.user.phoneNumber
+      phone: authStore.user.phone
     }
-
     await $fetch(runtimeConfig.public.baseUrl + LAuthRoutes.api.validate, { method: 'POST', credentials: 'include', body })
   }
 
   return {
+    register,
+    authentificate,
     refresh,
-    disconnect,
     validate,
-    isAuthentificate
+    isAuthentificate,
+    disconnect
   }
 }

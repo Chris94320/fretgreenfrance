@@ -1,5 +1,5 @@
 # Top-level configuration
-name = "fretgreen"
+name = "fretgreen-app"
 pages_build_output_dir = "./dist"
 compatibility_flags = [ "nodejs_compat" ]
 compatibility_date = "2022-07-12"

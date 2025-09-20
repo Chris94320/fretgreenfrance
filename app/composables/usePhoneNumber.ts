@@ -38,21 +38,21 @@ function sanitizePhoneNumber(input?: string) {
 }
 
 function getPhoneNumberResults({
-  phoneNumber,
+  phone,
   countryCode,
 }: {
-  phoneNumber?: string;
+  phone?: string;
   countryCode?: CountryCode;
 }): any {
   try {
-    if (!phoneNumber) {
+    if (!phone) {
       return {
         isValid: false,
         countryCode,
       };
     }
 
-    const parsedNumber = parsePhoneNumberFromString(phoneNumber, countryCode);
+    const parsedNumber = parsePhoneNumberFromString(phone, countryCode);
 
     return {
       countryCode: parsedNumber?.country ?? countryCode,
@@ -66,7 +66,7 @@ function getPhoneNumberResults({
       uri: parsedNumber?.getURI(),
       e164: parsedNumber?.format('E.164'),
       rfc3966: parsedNumber?.format('RFC3966'),
-      phoneNumber,
+      phone,
     };
   } catch (error) {
     throw new Error(`(getResultsFromPhoneNumber) ${error}`);
@@ -75,14 +75,14 @@ function getPhoneNumberResults({
 
 function getAsYouTypeFormat(
   countryCode?: CountryCode,
-  phoneNumber?: string
+  phone?: string
 ): string {
   try {
-    if (!phoneNumber) {
+    if (!phone) {
       return '';
     }
 
-    return new AsYouType(countryCode).input(phoneNumber);
+    return new AsYouType(countryCode).input(phone);
   } catch (error) {
     throw new Error(`(getAsYouTypeFormat) ${error}`);
   }

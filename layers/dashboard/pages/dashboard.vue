@@ -3,6 +3,7 @@ import { LDashboardRoutes } from '..'
 import authentificate from '@layers/auth/middleware/authentificate'
 import { useAuthStore } from '../../auth/stores/useAuthStore'
 import type { TabsItem } from '@nuxt/ui'
+import { useSeoMeta } from 'nuxt/app'
 
 definePageMeta({
   layout: 'dashboard',
@@ -11,6 +12,11 @@ definePageMeta({
   middleware: [
     authentificate
   ]
+})
+
+useSeoMeta({
+  title: 'Contact',
+  description: 'Contact Fret Green France'
 })
 
 const authStore = useAuthStore()

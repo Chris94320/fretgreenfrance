@@ -1,6 +1,6 @@
 <template>
   <UFormField
-    :error="!results.isValid && phoneNumber.length >= 10"
+    :error="!results.isValid && phone.length > 0"
     label="Téléphone"
     name="phone"
   >
@@ -44,9 +44,10 @@
             ? ''
             : 'i-heroicons-check-20-solid'
         "
-        :model-value="phoneNumber"
+        :model-value="phone"
         placeholder="06 11 22 33 44"
         :size
+        :required
         @update:model-value="
           onPhoneNumberChanged({
             newPhoneNumber: $event,
@@ -65,11 +66,13 @@ import {
   getCountries,
   getCountryCallingCode
 } from 'libphonenumber-js'
+import { maxLength } from 'zod/v4';
 import { usePhonenumber } from '~/composables/usePhoneNumber'
 
 defineProps<{
   modelValue: { e164?: string }
   size?: 'xl' | 'lg' | 'md' | 'sm' | 'xs'
+  required?: boolean
 }>()
 
 const emit = defineEmits(['update:modelValue'])
@@ -80,7 +83,7 @@ const {
 } = usePhonenumber()
 
 const locale = ref('en')
-const phoneNumber = ref<string>('')
+const phone = ref<string>('')
 const autoFormat = ref<boolean>(true)
 const selectedCountry = ref<{ id: CountryCode, dialCode: string, label: string }>({ id: 'FR', dialCode: '33', label: 'France' })
 const results = ref<{ isValid: boolean, countryCode?: CountryCode }>({
@@ -132,8 +135,6 @@ const { data: countries } = await useAsyncData(async () => {
   return countriesList
 })
 
-console.log('getCountryCallingCode', getCountryCallingCode)
-
 watch(
   () => selectedCountry.value,
   (value, oldValue) => {
@@ -176,16 +177,16 @@ function onPhoneNumberChanged({
     emit('update:modelValue', null)
   } else if (updateResults) {
     results.value = getPhoneNumberResults({
-      phoneNumber: sanitizedPhoneNumber,
+      phone: sanitizedPhoneNumber,
       countryCode: selectedCountry.value.id
     })
     emit('update:modelValue', results.value)
   }
 
   if (results.value.isValid && results.value.formatNational && autoFormat) {
-    phoneNumber.value = results.value.formatNational
+    phone.value = results.value.formatNational
   } else {
-    phoneNumber.value = sanitizedPhoneNumber
+    phone.value = sanitizedPhoneNumber
   }
 
   if (
@@ -214,13 +215,13 @@ function onCountryChanged({
 }) {
   if (updateResults) {
     results.value = getPhoneNumberResults({
-      phoneNumber: phoneNumber.value,
+      phone: phone.value,
       countryCode,
     })
   }
 
   onPhoneNumberChanged({
-    newPhoneNumber: phoneNumber.value,
+    newPhoneNumber: phone.value,
     autoFormat,
     noFormattingAsYouType,
     updateResults,

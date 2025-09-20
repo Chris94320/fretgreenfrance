@@ -19,12 +19,12 @@ useSeoMeta({
 const runtimeConfig = useRuntimeConfig()
 const authStore = useAuthStore()
 
-const phoneNumber = ref<{ e164?: string }>({ e164: undefined })
+const phone = ref<{ e164?: string }>({ e164: undefined })
 const password = ref<number[]>([])
 
 async function onSubmit() {
   const body: LAuthModels.AuthPayloadPost = {
-    phoneNumber: phoneNumber.value.e164,
+    phone: phone.value.e164,
     password: password.value.join('')
   }
   const user = await $fetch<LAuthModels.UserRecord>(runtimeConfig.public.baseUrl + LAuthRoutes.api.authentificate, { method: 'POST', body })
@@ -50,8 +50,8 @@ async function onSubmit() {
           @submit.prevent="onSubmit"
         >
           <InputPhoneNumber
-            v-model="phoneNumber"
-            name="phoneNumber"
+            v-model="phone"
+            name="phone"
             size="xl"
           />
           <UFormField label="Code">
@@ -82,7 +82,7 @@ async function onSubmit() {
           Vous souhaitez créer un compte ?
         </p>
         <UButton
-          to="/contact"
+          :to="{ name: LAuthRoutes.pagename.register }"
           color="primary"
           variant="link"
           size="sm"

@@ -1,17 +1,23 @@
 export interface UserRecord {
   id?: number
   username?: string
-  phoneNumber?: string
+  phone?: string
   password?: string
 }
 
 export interface AuthPayloadPost {
-  phoneNumber?: string
+  phone?: string
+  password?: string
+}
+
+export interface RegisterPayloadPost {
+  username?: string
+  phone?: string
   password?: string
 }
 
 export interface RefreshPayloadPost {
-  phoneNumber?: string
+  phone?: string
 }
 
 export enum AuthCookie {
