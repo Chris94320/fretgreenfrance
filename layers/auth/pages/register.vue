@@ -23,22 +23,26 @@ const passwordConfirmation = ref<number[]>([])
 const username = ref<string>()
 
 const errors = computed(() => ({
-  username: !!username.value,
-  phone: !!phone.value,
-  password: passwordConfirmation.value.length && password.value.length < 6 && 'Code pin invalide',
+  username: !username.value,
+  phone: !phone.value,
+  password: !!passwordConfirmation.value.length && password.value.length < 6 && 'Code pin invalide',
   passwordConfirmation: passwordConfirmation.value.length == 6 && password.value.join() !== passwordConfirmation.value.join() && 'Code pin invalide'
 }))
 
 const hasError = computed(() => !!Object.values(errors.value).filter(error => error).length)
 
 async function onSubmit() {
+  if (hasError.value) {
+    alert('Erreur: informations manquantes !')
+    return
+  }
   const body: LAuthModels.RegisterPayloadPost = {
     username: username.value,
     phone: phone.value.e164,
     password: password.value.join('')
   }
   await authClient.register(body)
-  alert('OK')
+  navigateTo({ name: LAuthRoutes.pagename.authentificate })
 }
 </script>
 

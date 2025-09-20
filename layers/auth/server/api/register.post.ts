@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     const id = crypto.randomUUID()
     const db = hubDatabase()
 
-    const query = await db.prepare('INSERT INTO users (id, username, phone, password) VALUES(?1, ?2, ?3, ?4)')
+    const query = await db.prepare('INSERT INTO users (createdAt, id, username, phone, password) VALUES(CURRENT_TIMESTAMP, ?1, ?2, ?3, ?4)')
       .bind(id, username, phone, password).run()
 
     console.log('userInsert', query)

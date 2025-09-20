@@ -1,5 +1,4 @@
 import type { H3Error } from 'h3'
-import users from '../../data/user.json'
 import { LAuthModels } from '../../index'
 import useAuthToken from '../../composables/useAuthToken'
 
@@ -16,8 +15,7 @@ export default defineEventHandler(async (event) => {
 
     const db = hubDatabase()
     const userDB = await db.prepare('SELECT * FROM users WHERE phone = ?').bind(phone).run()
-
-    console.log('userDB', userDB.results)
+    const users = userDB.results || []
 
     const matched = users.find(u => u.phone === phone && u.password === password)
 
